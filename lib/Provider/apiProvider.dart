@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'package:getApi/Model/MyModel.dart';
+import 'package:getApi/Model/UserModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 const baseUrl = 'https://app.ringersoft.com/api/ringersoftfoodapp/test-category/2?fbclid=IwAR3OfylOShIlzWs7pQEt5kLSyBfQhLrjhlWcbA4P6GIr-GUj0WDQaDgjTd0';
+
+const postUrl='https://reqres.in/api/users';
 
 class MyApiClient {
 
@@ -24,6 +27,30 @@ getAll() async {
     }else print ('erro -get');
   } catch(_){ }
 }
+
+Future<UserModel> postData(String name,String job )async{
+   final response =await httpClient.post(postUrl,
+   body: {
+     "name":name,
+     "job":job
+   });
+
+   if(response.statusCode==201)
+   {
+     print('Succesfully sent this data');
+    final String responseString =response.body;
+     return userModelFromJson(responseString);
+   }
+   else {
+     return null;
+   }
+
+
+
+
+}
+
+
 
 
 }
